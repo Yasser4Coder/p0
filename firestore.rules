@@ -1,0 +1,21 @@
+rules_version = '2';
+
+// Deploy: npm run deploy:rules  (from event-site/)
+//
+// First signup = create. Re-using the same email path = update → denied → duplicate in the app.
+// Keep `allow create` permissive so field-level quirks in rules never block *every* new registration
+// (that used to surface as permission-denied and was mislabeled “email already registered”).
+// Tighten later with App Check / Cloud Functions if you need stricter validation.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /p0_registrations/{docId} {
+      // Allow single-doc reads only when the doc does not exist, so clients can check
+      // “already registered?” without exposing existing registrations (privacy).
+      allow get: if !exists(/databases/$(database)/documents/p0_registrations/$(docId));
+      allow list: if false;
+      allow create: if true;
+      allow update, delete: if false;
+    }
+  }
+}
