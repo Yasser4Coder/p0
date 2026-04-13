@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ALGERIAN_WILAYAS } from "./wilayas";
 
 export const SHIRT_SIZES = ["XS", "S", "M", "L", "XL", "XXL"] as const;
 
@@ -27,6 +28,9 @@ export const registrationSchema = z.object({
     .min(8, "Enter a valid phone number")
     .max(24, "Phone number is too long")
     .regex(phoneRegex, "Use digits; you may start with + or country code"),
+  wilaya: z.enum(ALGERIAN_WILAYAS, {
+    errorMap: () => ({ message: "Select your wilaya" }),
+  }),
   email: z
     .string()
     .trim()

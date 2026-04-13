@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import BrandedPanel from "../components/BrandedPanel";
 import { isFirebaseConfigured } from "../lib/firebase";
 import { registrationSchema, SHIRT_SIZES } from "../lib/registrationSchema";
+import { ALGERIAN_WILAYAS } from "../lib/wilayas";
 import { getFirebaseErrorCode } from "../lib/firebaseErrors";
 import {
   DuplicateEmailError,
@@ -52,6 +53,7 @@ export default function RegisterPage() {
       firstName: String(fd.get("firstName") ?? ""),
       familyName: String(fd.get("familyName") ?? ""),
       phone: String(fd.get("phone") ?? ""),
+      wilaya: String(fd.get("wilaya") ?? ""),
       email: String(fd.get("email") ?? ""),
       teamName: String(fd.get("teamName") ?? ""),
       nenSkill: String(fd.get("nenSkill") ?? ""),
@@ -220,6 +222,31 @@ export default function RegisterPage() {
                   />
                   {fieldErrors.phone && (
                     <p className="mt-1 text-[0.6rem] font-bold normal-case text-red-400">{fieldErrors.phone}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label className={labelClass} htmlFor="wilaya">
+                    WILAYA
+                  </label>
+                  <select
+                    id="wilaya"
+                    name="wilaya"
+                    className={inputClass("wilaya")}
+                    defaultValue=""
+                    aria-invalid={Boolean(fieldErrors.wilaya)}
+                  >
+                    <option value="" disabled>
+                      SELECT WILAYA
+                    </option>
+                    {ALGERIAN_WILAYAS.map((w) => (
+                      <option key={w} value={w}>
+                        {w}
+                      </option>
+                    ))}
+                  </select>
+                  {fieldErrors.wilaya && (
+                    <p className="mt-1 text-[0.6rem] font-bold normal-case text-red-400">{fieldErrors.wilaya}</p>
                   )}
                 </div>
 

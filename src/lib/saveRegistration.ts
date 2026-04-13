@@ -38,6 +38,7 @@ export async function saveRegistration(
         firstName: data.firstName,
         familyName: data.familyName,
         phone: data.phone,
+        wilaya: data.wilaya,
         email,
         teamName: data.teamName,
         nenSkill: data.nenSkill,
