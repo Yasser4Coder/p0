@@ -1,9 +1,9 @@
 import { AlertCircle, ArrowLeft, Loader2, LogIn } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import BrandedPanel from "../components/BrandedPanel";
 import { getFirebaseErrorCode } from "../lib/firebaseErrors";
-import { adminSignIn, getAdminEmail, getAdminPassword } from "../lib/adminAuth";
+import { adminSignIn } from "../lib/adminAuth";
 import { auth, isFirebaseConfigured } from "../lib/firebase";
 
 const baseInput =
@@ -16,11 +16,8 @@ export default function AdminLoginPage() {
   const navigate = useNavigate();
   const firebaseReady = isFirebaseConfigured();
 
-  const presetEmail = useMemo(() => getAdminEmail(), []);
-  const presetPassword = useMemo(() => getAdminPassword(), []);
-
-  const [username, setUsername] = useState(presetEmail);
-  const [password, setPassword] = useState(presetPassword);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
 
