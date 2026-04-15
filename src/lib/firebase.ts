@@ -1,4 +1,5 @@
 import { getApps, initializeApp, type FirebaseApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const required = [
@@ -32,3 +33,4 @@ function getApp(): FirebaseApp {
 }
 
 export const db = isFirebaseConfigured() ? getFirestore(getApp()) : null;
+export const auth = isFirebaseConfigured() ? getAuth(getApp()) : null;

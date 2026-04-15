@@ -45,6 +45,7 @@ export async function saveRegistration(
         hackathonBefore: data.hackathonBefore,
         shirtSize: data.shirtSize,
         matricule: data.matricule,
+        contacted: false,
         createdAt: serverTimestamp(),
         eventEdition: "p0-third-edition",
       },

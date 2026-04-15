@@ -21,6 +21,14 @@ body {
   background-color: #000;
 }
 
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
 * {
   scrollbar-width: thin;
   scrollbar-color: rgba(225, 214, 158, 0.55) rgba(0, 0, 0, 0.45);

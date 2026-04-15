@@ -10,12 +10,19 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /p0_registrations/{docId} {
-      // Allow single-doc reads only when the doc does not exist, so clients can check
-      // “already registered?” without exposing existing registrations (privacy).
-      allow get: if !exists(/databases/$(database)/documents/p0_registrations/$(docId));
-      allow list: if false;
+      // Admin-only reads for the dashboard (set this UID in Firebase Auth).
+      // Replace ADMIN_UID_HERE with your admin user's UID from the Firebase console.
+      function isAdmin() {
+        return request.auth != null && request.auth.uid == "Of8Gn0pshiYbJgGh5096VwmMUEs2";
+      }
+
+      allow get, list: if isAdmin();
       allow create: if true;
-      allow update, delete: if false;
+      // Allow admin to mark participants as contacted (and only that).
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).changedKeys().hasOnly(["contacted", "contactedAt"])
+        && request.resource.data.contacted is bool;
+      allow delete: if false;
     }
   }
 }
